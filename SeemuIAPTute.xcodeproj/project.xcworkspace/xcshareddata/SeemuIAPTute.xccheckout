@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>F5F65CC9-DFEC-4974-9F7A-A28AD60C576D</string>
+	<key>IDESourceControlProjectName</key>
+	<string>SeemuIAPTute</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>F3222C2EBF997B3C4D0C55EECB36B7E0EF44BDD7</key>
+		<string>https://github.com/awseeley/Swift-In-App-Purchase-Tutorial.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>SeemuIAPTute.xcodeproj</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>F3222C2EBF997B3C4D0C55EECB36B7E0EF44BDD7</key>
+		<string>../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/awseeley/Swift-In-App-Purchase-Tutorial.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>F3222C2EBF997B3C4D0C55EECB36B7E0EF44BDD7</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>F3222C2EBF997B3C4D0C55EECB36B7E0EF44BDD7</string>
+			<key>IDESourceControlWCCName</key>
+			<string>SeemuIAPTute</string>
+		</dict>
+	</array>
+</dict>
+</plist>

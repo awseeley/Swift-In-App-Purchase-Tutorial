@@ -15,19 +15,17 @@ class ViewController: UIViewController, SKProductsRequestDelegate, SKPaymentTran
     @IBOutlet var outAddCoins: UIButton!
     var coins = 50
     
+    // 1
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
-        
         outRemoveAds.enabled = false
         outAddCoins.enabled = false
-        
         
         // Set IAPS
         if(SKPaymentQueue.canMakePayments()) {
             println("IAP is enabled, loading")
             var productID:NSSet = NSSet(objects: "seemu.iap.addcoins", "seemu.iap.removeads")
-            var request: SKProductsRequest = SKProductsRequest(productIdentifiers: productID)
+            var request: SKProductsRequest = SKProductsRequest(productIdentifiers: productID as Set<NSObject>)
             request.delegate = self
             request.start()
         } else {
@@ -36,11 +34,7 @@ class ViewController: UIViewController, SKProductsRequestDelegate, SKPaymentTran
         
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-
+    // 2
     @IBAction func btnRemoveAds(sender: UIButton) {
         for product in list {
             var prodID = product.productIdentifier
@@ -53,8 +47,8 @@ class ViewController: UIViewController, SKProductsRequestDelegate, SKPaymentTran
         
     }
 
+    // 3
     @IBAction func btnAddCoins(sender: UIButton) {
-        
         for product in list {
             var prodID = product.productIdentifier
             if(prodID == "seemu.iap.addcoins") {
@@ -66,15 +60,23 @@ class ViewController: UIViewController, SKProductsRequestDelegate, SKPaymentTran
         
     }
     
+    // 4
     func removeAds() {
         lblAd.removeFromSuperview()
     }
     
+    // 5
     func addCoins() {
         coins = coins + 50
         lblCoinAmount.text = "\(coins)"
     }
     
+    
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+    }
+
     
     
     @IBAction func RestorePurchases(sender: UIButton) {
@@ -106,7 +108,7 @@ class ViewController: UIViewController, SKProductsRequestDelegate, SKPaymentTran
             println(product.localizedDescription)
             println(product.price)
             
-            list.append(product as SKProduct)
+            list.append(product as! SKProduct)
         }
         
         outRemoveAds.enabled = true
@@ -118,7 +120,7 @@ class ViewController: UIViewController, SKProductsRequestDelegate, SKPaymentTran
         
         var purchasedItemIDS = []
         for transaction in queue.transactions {
-            var t: SKPaymentTransaction = transaction as SKPaymentTransaction
+            var t: SKPaymentTransaction = transaction as! SKPaymentTransaction
             
             let prodID = t.payment.productIdentifier as String
             
@@ -141,7 +143,7 @@ class ViewController: UIViewController, SKProductsRequestDelegate, SKPaymentTran
         println("add paymnet")
         
         for transaction:AnyObject in transactions {
-            var trans = transaction as SKPaymentTransaction
+            var trans = transaction as! SKPaymentTransaction
             println(trans.error)
             
             switch trans.transactionState {
@@ -179,6 +181,7 @@ class ViewController: UIViewController, SKProductsRequestDelegate, SKPaymentTran
     func finishTransaction(trans:SKPaymentTransaction)
     {
         println("finish trans")
+        SKPaymentQueue.defaultQueue().finishTransaction(trans)
     }
     func paymentQueue(queue: SKPaymentQueue!, removedTransactions transactions: [AnyObject]!)
     {
