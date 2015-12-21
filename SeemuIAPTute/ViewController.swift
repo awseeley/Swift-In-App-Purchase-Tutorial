@@ -23,13 +23,14 @@ class ViewController: UIViewController, SKProductsRequestDelegate, SKPaymentTran
         
         // Set IAPS
         if(SKPaymentQueue.canMakePayments()) {
-            println("IAP is enabled, loading")
-            var productID:NSSet = NSSet(objects: "seemu.iap.addcoins", "seemu.iap.removeads")
-            var request: SKProductsRequest = SKProductsRequest(productIdentifiers: productID as Set<NSObject>)
+            print("IAP is enabled, loading")
+            let productID:NSSet = NSSet(objects: "seemu.iap.addcoins", "seemu.iap.removeads")
+            let request: SKProductsRequest = SKProductsRequest(productIdentifiers: productID as! Set<String>)
+            
             request.delegate = self
             request.start()
         } else {
-            println("please enable IAPS")
+            print("please enable IAPS")
         }
         
     }
@@ -37,7 +38,7 @@ class ViewController: UIViewController, SKProductsRequestDelegate, SKPaymentTran
     // 2
     @IBAction func btnRemoveAds(sender: UIButton) {
         for product in list {
-            var prodID = product.productIdentifier
+            let prodID = product.productIdentifier
             if(prodID == "seemu.iap.removeads") {
                 p = product
                 buyProduct()
@@ -50,7 +51,7 @@ class ViewController: UIViewController, SKProductsRequestDelegate, SKPaymentTran
     // 3
     @IBAction func btnAddCoins(sender: UIButton) {
         for product in list {
-            var prodID = product.productIdentifier
+            let prodID = product.productIdentifier
             if(prodID == "seemu.iap.addcoins") {
                 p = product
                 buyProduct()
@@ -78,11 +79,11 @@ class ViewController: UIViewController, SKProductsRequestDelegate, SKPaymentTran
     }
 
     
-    
     @IBAction func RestorePurchases(sender: UIButton) {
         SKPaymentQueue.defaultQueue().addTransactionObserver(self)
         SKPaymentQueue.defaultQueue().restoreCompletedTransactions()
     }
+    
     
     var list = [SKProduct]()
     var p = SKProduct()
@@ -91,87 +92,86 @@ class ViewController: UIViewController, SKProductsRequestDelegate, SKPaymentTran
     // seemu.iap.addcoins
     
     func buyProduct() {
-        println("buy " + p.productIdentifier)
-        var pay = SKPayment(product: p)
+        print("buy " + p.productIdentifier)
+        let pay = SKPayment(product: p)
         SKPaymentQueue.defaultQueue().addTransactionObserver(self)
         SKPaymentQueue.defaultQueue().addPayment(pay as SKPayment)
     }
     
-    func productsRequest(request: SKProductsRequest!, didReceiveResponse response: SKProductsResponse!) {
-        println("product request")
-        var myProduct = response.products
+    func productsRequest(request: SKProductsRequest, didReceiveResponse response: SKProductsResponse) {
+        print("product request")
+        let myProduct = response.products
         
         for product in myProduct {
-            println("product added")
-            println(product.productIdentifier)
-            println(product.localizedTitle)
-            println(product.localizedDescription)
-            println(product.price)
+            print("product added")
+            print(product.productIdentifier)
+            print(product.localizedTitle)
+            print(product.localizedDescription)
+            print(product.price)
             
-            list.append(product as! SKProduct)
+            list.append(product )
         }
         
         outRemoveAds.enabled = true
         outAddCoins.enabled = true
     }
     
-    func paymentQueueRestoreCompletedTransactionsFinished(queue: SKPaymentQueue!) {
-        println("transactions restored")
+    func paymentQueueRestoreCompletedTransactionsFinished(queue: SKPaymentQueue) {
+        print("transactions restored")
         
-        var purchasedItemIDS = []
         for transaction in queue.transactions {
-            var t: SKPaymentTransaction = transaction as! SKPaymentTransaction
+            let t: SKPaymentTransaction = transaction 
             
             let prodID = t.payment.productIdentifier as String
             
             switch prodID {
             case "seemu.iap.removeads":
-                println("remove ads")
+                print("remove ads")
                 removeAds()
             case "seemu.iap.addcoins":
-                println("add coins to account")
+                print("add coins to account")
                 addCoins()
             default:
-                println("IAP not setup")
+                print("IAP not setup")
             }
             
         }
     }
 
     
-    func paymentQueue(queue: SKPaymentQueue!, updatedTransactions transactions: [AnyObject]!) {
-        println("add paymnet")
+    func paymentQueue(queue: SKPaymentQueue, updatedTransactions transactions: [SKPaymentTransaction]) {
+        print("add paymnet")
         
         for transaction:AnyObject in transactions {
-            var trans = transaction as! SKPaymentTransaction
-            println(trans.error)
+            let trans = transaction as! SKPaymentTransaction
+            print(trans.error)
             
             switch trans.transactionState {
                 
             case .Purchased:
-                println("buy, ok unlock iap here")
-                println(p.productIdentifier)
+                print("buy, ok unlock iap here")
+                print(p.productIdentifier)
                 
                 let prodID = p.productIdentifier as String
                 switch prodID {
                     case "seemu.iap.removeads":
-                        println("remove ads")
+                        print("remove ads")
                         removeAds()
                     case "seemu.iap.addcoins":
-                        println("add coins to account")
+                        print("add coins to account")
                         addCoins()
                     default:
-                        println("IAP not setup")
+                        print("IAP not setup")
                 }
                 
                 queue.finishTransaction(trans)
                 break;
             case .Failed:
-                println("buy error")
+                print("buy error")
                 queue.finishTransaction(trans)
                 break;
             default:
-                println("default")
+                print("default")
                 break;
                 
             }
@@ -180,12 +180,12 @@ class ViewController: UIViewController, SKProductsRequestDelegate, SKPaymentTran
     
     func finishTransaction(trans:SKPaymentTransaction)
     {
-        println("finish trans")
+        print("finish trans")
         SKPaymentQueue.defaultQueue().finishTransaction(trans)
     }
-    func paymentQueue(queue: SKPaymentQueue!, removedTransactions transactions: [AnyObject]!)
+    func paymentQueue(queue: SKPaymentQueue, removedTransactions transactions: [SKPaymentTransaction])
     {
-        println("remove trans");
+        print("remove trans");
     }
 
     
