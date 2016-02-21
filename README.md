@@ -6,6 +6,7 @@ Source code on adding in app purchases in Swift. Using Xcode 6.
 Tutorial:
 
 http://youtu.be/QsD0P7gZWpg
+http://www.seemuapps.com/tutorial-transparent-ui-navigation-bar
 
 Check out our Website: http://www.seemuapps.com
 
